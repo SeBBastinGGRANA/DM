@@ -534,19 +534,23 @@
                 button.addEventListener('click', () => {
                     const isActive = button.classList.contains('active');
                     
-                    // Opcional: Cerrar otros acordeones abiertos en el mismo grupo
                     const parentLayout = button.closest('.accordion-layout');
                     if (parentLayout) {
                         parentLayout.querySelectorAll('.accordion-item').forEach(item => {
                             item.querySelector('.accordion-button').classList.remove('active');
-                            item.querySelector('.accordion-content, .accordion-content-full').style.maxHeight = null;
+                            const content = item.querySelector('.accordion-content, .accordion-content-full');
+                            if (content) {
+                                content.style.maxHeight = null;
+                            }
                         });
                     }
 
                     if (!isActive) {
                         button.classList.add('active');
                         const content = button.nextElementSibling;
-                        content.style.maxHeight = content.scrollHeight + "px";
+                        if (content) {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                        }
                     }
                 });
             });
